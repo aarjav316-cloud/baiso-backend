@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import maidRoutes from "./src/routes/maid.routes.js";
+
 import { connectDB } from "./src/configs/db.js";
 
 dotenv.config();
@@ -11,14 +13,21 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-connectDB()
-
 app.get("/", (req, res) => {
   res.send("backend running");
 });
 
+app.use("/api/maids", maidRoutes);
+
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log("backend running on port 5000");
-});
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`backend running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Failed to connect to database:", error);
+    process.exit(1);
+  });
