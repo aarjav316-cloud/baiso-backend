@@ -3,7 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import maidRoutes from "./src/routes/maid.routes.js";
-import userRoutes from "./src/routes/user.routes.js"
+import userRoutes from "./src/routes/user.routes.js";
+import requestRoutes from "./src/routes/request.routes.js";
 
 import { connectDB } from "./src/configs/db.js";
 
@@ -11,15 +12,16 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("backend running")
+  res.send("backend running");
 });
 
-app.use("/api/maids", maidRoutes)
-app.use("/api/users" , userRoutes)
+app.use("/api/maids", maidRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/requests", requestRoutes);
 
 const PORT = process.env.PORT || 5000;
 
@@ -33,6 +35,3 @@ connectDB()
     console.error("Failed to connect to database:", error);
     process.exit(1);
   });
-
-
-  

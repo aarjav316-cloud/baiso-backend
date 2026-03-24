@@ -6,7 +6,7 @@ export const createRequest = async (req, res) => {
     const { maidId } = req.body;
     const userId = req.user._id;
 
-    // Check if request already exists
+    // Check if request already  exists
     const existingRequest = await Request.findOne({
       user: userId,
       maid: maidId,
@@ -15,11 +15,10 @@ export const createRequest = async (req, res) => {
     if (existingRequest) {
       return res.status(400).json({
         success: false,
-        message: "You have already requested this maid",
+        message: "You have  already requested this maid",
       });
     }
 
-    // Create new request
     const request = await Request.create({
       user: userId,
       maid: maidId,
@@ -39,7 +38,6 @@ export const createRequest = async (req, res) => {
   }
 };
 
-// Get My Requests
 export const getMyRequests = async (req, res) => {
   try {
     const userId = req.user._id;
