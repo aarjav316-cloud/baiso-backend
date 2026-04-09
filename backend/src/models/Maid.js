@@ -46,6 +46,10 @@ const maidSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+// Index for efficient queries
+maidSchema.index({ location: 1 });
+maidSchema.index({ price: 1 });
+
 const Maid = mongoose.model("Maid", maidSchema);
 
 export default Maid;
